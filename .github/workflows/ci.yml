@@ -198,7 +198,8 @@ jobs:
   coverage:
     name: Upload coverage reports
     needs: [cpu, gpu]
-    if: always() && !cancelled() && github.event.action != 'closed'
+    # Codecov uploads need the upstream CODECOV_TOKEN secret; forks skip them.
+    if: always() && !cancelled() && github.event.action != 'closed' && github.repository == 'RosettaCommons/tmol'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
